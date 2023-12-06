@@ -35,7 +35,7 @@ jobs:
         run: pnpm run build
 
       # 上传到阿里云
-      - name: 发布到阿里云
+      - name: 发布到腾讯云
         uses: easingthemes/ssh-deploy@main
         with:
           # 私钥
