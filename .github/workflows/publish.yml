@@ -39,7 +39,7 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         with:
           # 私钥
-          SSH_PRIVATE_KEY: ${{ secrets.~/.ssh/public_id_rsa.pub }}
+          SSH_PRIVATE_KEY: ${{ secrets.PRIVATEKEY }}
           # SCP参数
           ARGS: '-avzr --delete'
           # 源目录
