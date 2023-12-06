@@ -45,10 +45,10 @@ jobs:
           # 源目录
           SOURCE: 'dist'
           # 服务器ip
-          REMOTE_HOST: 'http://49.235.118.67/'
+          REMOTE_HOST: '49.235.118.67'
           # 用户
           REMOTE_USER: 'root'
           # 目标地址
-          TARGET: '/xjdata/nginx/html'
+          TARGET: '/root/xjdata/nginx/html'
           # 测试ssh连接
           SCRIPT_BEFORE: ls
