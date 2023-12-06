@@ -49,6 +49,6 @@ jobs:
           # 用户
           REMOTE_USER: 'root'
           # 目标地址
-          TARGET: '/root/xjdata/nginx/html'
+          TARGET: '/xjdata/nginx/html'
           # 测试ssh连接
           SCRIPT_BEFORE: ls
