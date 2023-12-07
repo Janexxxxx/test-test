@@ -34,9 +34,6 @@ jobs:
       - name: 打包
         run: pnpm run build
 
-      - name: Set private key permissions
-        run: chmod 600 ${{ secrets.PRIVATEKEY }}
-
       # 上传到阿里云
       - name: 发布到腾讯云
         uses: easingthemes/ssh-deploy@main
