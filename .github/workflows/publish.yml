@@ -45,11 +45,7 @@ jobs:
           # 源目录
           SOURCE: 'dist'
           # 服务器ip
-          REMOTE_HOST: '49.235.118.67'
-          # 服务器端口
-          REMOTE_PORT: '8818'
-          # 服务器密码
-          REMOTE_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+          REMOTE_HOST: '49.235.118.67:8818'
           # 用户
           REMOTE_USER: 'root'
           # 目标地址
