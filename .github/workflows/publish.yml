@@ -15,6 +15,24 @@ jobs:
       - name: 迁出代码
         # 使用action库 action/checkout获取代码
         uses: actions/checkout@v4
+      # 安装Node18
+
+      - name: 安装node.js
+        # 使用action库  actions/setup-node安装node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.14.0
+
+      - name: 安装pnpm
+        run: npm install -g pnpm
+
+      # 安装依赖
+      - name: 安装依赖
+        run: pnpm install
+
+      # 打包
+      - name: 打包
+        run: pnpm run build
 
       # 上传到阿里云
       - name: 发布到腾讯云
@@ -31,11 +49,6 @@ jobs:
           # 用户
           REMOTE_USER: 'root'
           # 目标地址
-          TARGET: '/xjdata/nginx/html'
+          TARGET: '/xjdata2/nginx/html'
           # 测试ssh连接
-          SCRIPT_BEFORE: |
-            # 构建 Docker 镜像
-            docker build -t my-frontend-app .
-
-            # 运行 Docker 容器
-            docker run -d --name my-frontend-container -p 8908:80 my-frontend-app
+          SCRIPT_BEFORE: ls
