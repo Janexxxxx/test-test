@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: 打包应用并上传服务器
 
 on:
   push:
@@ -8,41 +8,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.14.0
-
-      - name: 安装pnpm
-        run: npm install -g pnpm
-      - name: Install Dependencies
-        run: pnpm install
-
-      - name: Build Application
-        run: pnpm run build
-
       - name: Build Docker Image
-        run: docker build -t nginx:latest .
+        run: docker build -t my-frontend-app .
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Setup SSH Key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.PRIVATEKEY }}
-
-      - name: Deploy to Server
-        run: |
-          docker stop xj22-nginx || true
-          docker rm xj22-nginx || true
-          docker run -p 8828:80 --name xj22-nginx \
-            -v /xjdata2/nginx/html:/usr/share/nginx/html \
-            -v /xjdata2/nginx/logs:/var/log/nginx \
-            -v /xjdata2/nginx/conf:/etc/nginx/conf.d \
-            -v /xjdata2/nginx/cert:/etc/nginx/cert -d nginx
+      - name: Run Docker Container
+        run: docker run -p 8828:80 --name xj22-nginx -v /xjdata2/nginx/html:/usr/share/nginx/html -v /xjdata2/nginx/logs:/var/log/nginx -v /xjdata2/nginx/conf:/etc/nginx/conf.d -v /xjdata2/nginx/cert:/etc/nginx/cert -d my-frontend-app
