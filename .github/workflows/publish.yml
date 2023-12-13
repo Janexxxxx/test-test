@@ -16,10 +16,33 @@ jobs:
       - name: Build Docker Image
         run: sudo docker build -t my-frontend-app .
 
-      - name: Run Docker Container
-        run: |
+ # 上传到阿里云
+      - name: 发布到腾讯云
+        uses: easingthemes/ssh-deploy@main
+        with:
+          # 私钥
+          SSH_PRIVATE_KEY: ${{ secrets.PRIVATEKEY }}
+          # SCP参数
+          ARGS: '-avzr --delete'
+          # 源目录
+          SOURCE: 'dist/*'
+          # 服务器ip
+          REMOTE_HOST: '49.235.118.67'
+          # 用户
+          REMOTE_USER: 'root'
+          # 目标地址
+          TARGET: '/xjdata2/nginx/html'
+          # 测试ssh连接
+          SCRIPT_BEFORE: |
           docker stop xj22-nginx || true
           docker rm xj22-nginx || true
           docker run -p 8828:80 --name xj22-nginx -v /xjdata2/nginx/conf:/etc/nginx/conf.d -d my-frontend-app
           sleep 5  # 等待 5 秒以确保容器已经正常运行
           docker logs xj22-nginx  # 打印容器日志
+      # - name: Run Docker Container
+      #   run: |
+      #     docker stop xj22-nginx || true
+      #     docker rm xj22-nginx || true
+      #     docker run -p 8828:80 --name xj22-nginx -v /xjdata2/nginx/conf:/etc/nginx/conf.d -d my-frontend-app
+      #     sleep 5  # 等待 5 秒以确保容器已经正常运行
+      #     docker logs xj22-nginx  # 打印容器日志
