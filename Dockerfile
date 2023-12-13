@@ -7,7 +7,7 @@ FROM node:18 AS builder
 WORKDIR /app
 
 # 复制 package.json 和 package-lock.json 到工作目录
-COPY package.json pnpm-lock.json ./
+COPY package.json pnpm-lock.yaml ./
 
 # 安装项目依赖
 RUN npm install -g pnpm
