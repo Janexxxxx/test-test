@@ -5,7 +5,7 @@ FROM nginx
 COPY dist /usr/share/nginx/html
 
 # 暴露 Nginx 的默认端口
-EXPOSE 80
+EXPOSE 8288
 
 # 启动 Nginx
 CMD ["nginx", "-g", "daemon off;"]
