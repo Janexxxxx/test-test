@@ -26,7 +26,7 @@ jobs:
         run: pnpm run build
 
       - name: Build Docker Image
-        run: docker build -t my-frontend-app:latest .
+        run: docker build -t nginx:latest .
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,4 +45,4 @@ jobs:
             -v /xjdata2/nginx/html:/usr/share/nginx/html \
             -v /xjdata2/nginx/logs:/var/log/nginx \
             -v /xjdata2/nginx/conf:/etc/nginx/conf.d \
-            -v /xjdata2/nginx/cert:/etc/nginx/cert -d my-frontend-app
+            -v /xjdata2/nginx/cert:/etc/nginx/cert -d nginx
