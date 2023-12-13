@@ -15,8 +15,7 @@ RUN npm install -g pnpm
 RUN pnpm install
 
 # 复制应用程序代码到工作目录
-COPY . .
-
+COPY dist/ /usr/share/nginx/html
 # 构建应用程序
 RUN pnpm run build
 
