@@ -39,9 +39,9 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          docker stop xj21-nginx || true
-          docker rm xj21-nginx || true
-          docker run -p 8838:80 --name xj21-nginx \
+          docker stop xj22-nginx || true
+          docker rm xj22-nginx || true
+          docker run -p 8828:80 --name xj22-nginx \
             -v /xjdata2/nginx/html:/usr/share/nginx/html \
             -v /xjdata2/nginx/logs:/var/log/nginx \
             -v /xjdata2/nginx/conf:/etc/nginx/conf.d \
