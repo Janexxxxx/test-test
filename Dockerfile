@@ -21,9 +21,6 @@ RUN npm run build
 # 使用 Nginx 镜像作为基础镜像
 FROM nginx:latest
 
-# 设置 Nginx 配置文件
-COPY /xjdata2/nginx/conf/default.conf /etc/nginx/conf.d/default.conf
-
 # 复制打包好的 dist 目录到 Nginx 默认静态文件目录
 COPY --from=builder /app/dist /usr/share/nginx/html
 
