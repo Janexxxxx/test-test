@@ -1,26 +1,31 @@
 # Dockerfile
 
 # 使用 Node.js 官方镜像作为基础镜像
-FROM node:18
+FROM node:14 AS builder
 
 # 设置工作目录
 WORKDIR /app
 
 # 复制 package.json 和 package-lock.json 到工作目录
-COPY package.json pnpm-lock.yaml ./
+COPY package.json package-lock.json ./
 
 # 安装项目依赖
-RUN npm install -g pnpm
-
-RUN pnpm install
+RUN npm install
 
 # 复制应用程序代码到工作目录
-COPY dist/ /usr/share/nginx/html
-# 构建应用程序
-RUN pnpm run build
+COPY . .
 
-# 暴露容器的端口，如果你的应用使用的是 80 端口，可以设置为 80
+# 打包应用程序
+RUN npm run build
+
+# 使用 Nginx 镜像作为基础镜像
+FROM nginx:latest
+
+# 设置 Nginx 配置文件
+COPY /xjdata2/nginx/conf/default.conf /etc/nginx/conf.d/default.conf
+
+# 复制打包好的 dist 目录到 Nginx 默认静态文件目录
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# 暴露容器的端口
 EXPOSE 80
-
-# 容器启动时执行的命令
-CMD ["pnpm", "start"]
