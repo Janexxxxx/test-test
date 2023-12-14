@@ -21,6 +21,9 @@ jobs:
       # - name: Copy dist from Docker Container
       #   run: sudo docker cp $(sudo docker create nginx:latest):/app/dist ./dist
 
+      - name: 列出构建后的文件
+        run: ls -R
+
       # 发布到腾讯云
       - name: 发布到腾讯云
         uses: easingthemes/ssh-deploy@main
