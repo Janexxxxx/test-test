@@ -13,9 +13,9 @@ jobs:
       - name: 迁出代码
         uses: actions/checkout@v4
 
-      # 构建 Docker 镜像
-      - name: Build Docker Image
-        run: sudo docker build -t nginx:latest .
+      # # 构建 Docker 镜像
+      # - name: Build Docker Image
+      #   run: sudo docker build -t nginx:latest .
 
   deploy:
     needs: build
