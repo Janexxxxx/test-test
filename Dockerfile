@@ -20,12 +20,14 @@ RUN pnpm run build
 # 输出构建阶段的文件结构
 RUN ls -R /app
 
-
 # 使用 Nginx 镜像作为基础镜像
 FROM nginx:latest
 
-# 复制打包好的 dist 目录到 Nginx 默认静态文件目录
-COPY --from=builder /app/dist /usr/share/nginx/html
+# 指定目录，确保该目录在服务器上存在，如果不存在，可以提前创建
+ARG TARGET_DIR=/xjdata2/nginx/html
+
+# 复制打包好的 dist 目录到指定目录
+COPY --from=builder /app/dist $TARGET_DIR
 
 # 暴露容器的端口
 EXPOSE 80
