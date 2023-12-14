@@ -17,8 +17,8 @@ jobs:
       - name: Build Docker Image
         run: sudo docker build -t nginx:latest .
 
-
-        - name: Copy dist from Docker Container
+      # 构建 Docker 镜像
+      - name: Copy dist from Docker Container
         run: sudo docker cp $(sudo docker create nginx:latest):/app/dist ./dist
 
       # 发布到腾讯云
@@ -44,4 +44,3 @@ jobs:
             docker run -p 8828:80 --name xj22-nginx -v /xjdata2/nginx/html:/usr/share/nginx/html -v /xjdata2/nginx/conf:/etc/nginx/conf.d -d nginx:latest
             sleep 5  # 等待 5 秒以确保容器已经正常运行
             docker logs xj22-nginx  # 打印容器日志
-
