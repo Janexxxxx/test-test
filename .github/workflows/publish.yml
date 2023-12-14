@@ -47,8 +47,3 @@ jobs:
       #     docker run -p 8828:80 --name xj22-nginx -v /xjdata2/nginx/conf:/etc/nginx/conf.d -d my-frontend-app
       #     sleep 5  # 等待 5 秒以确保容器已经正常运行
       #     docker logs xj22-nginx  # 打印容器日志
-docker run -p 8828:80 --name xj22-nginx \
--v /xjdata2/nginx/html:/usr/share/nginx/html \
--v /xjdata2/nginx/logs:/var/log/nginx \
--v /xjdata2/nginx/conf:/etc/nginx/conf.d \
--v /xjdata2/nginx/cert:/etc/nginx/cert -d nginx
