@@ -27,7 +27,7 @@ jobs:
           # 私钥
           SSH_PRIVATE_KEY: ${{ secrets.PRIVATEKEY }}
           # SCP参数
-          ARGS: '-avzr --delete'
+          ARGS: '-avzr'
           # 源目录（这里需要修改为服务器上的目录）
           # SOURCE: '/xjdata2/nginx/html/*'
           # 服务器ip
