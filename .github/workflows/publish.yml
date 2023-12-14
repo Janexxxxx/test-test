@@ -20,9 +20,8 @@ jobs:
       - name: 列出构建后的文件
         run: ls -R
 
-      # 导出 dist 目录作为构建产物
-      - name: 导出 dist 目录
-        run: mkdir dist && cp -r app/dist dist
+      - name: 复制构建好的文件到工作目录
+        run: sudo docker cp $(sudo docker create nginx:latest):/usr/share/nginx/html ./dist
 
       # 发布到腾讯云
       - name: 发布到腾讯云
@@ -33,7 +32,7 @@ jobs:
           # SCP参数
           ARGS: '-avzr'
           # 源目录（这里需要修改为服务器上的目录）
-          SOURCE: './dist/*'
+          SOURCE: 'dist/*'
           # 服务器ip
           REMOTE_HOST: '49.235.118.67'
           # 用户
