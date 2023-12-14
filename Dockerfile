@@ -1,5 +1,3 @@
-# Dockerfile
-
 # 使用 Node.js 官方镜像作为基础镜像
 FROM node:18 AS builder
 
@@ -11,8 +9,8 @@ COPY package.json pnpm-lock.yaml ./
 
 # 安装项目依赖
 RUN npm install -g pnpm
-
 RUN pnpm install
+
 # 复制应用程序代码到工作目录
 COPY . .
 

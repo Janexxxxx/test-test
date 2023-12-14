@@ -8,15 +8,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # 获取代码
+      - name: 迁出代码
+        uses: actions/checkout@v4
 
+      # 构建 Docker 镜像
       - name: Build Docker Image
         run: sudo docker build -t my-frontend-app .
 
-      # 上传到阿里云
+      # 发布到腾讯云
       - name: 发布到腾讯云
         uses: easingthemes/ssh-deploy@main
         with:
@@ -25,13 +26,13 @@ jobs:
           # SCP参数
           ARGS: '-avzr --delete'
           # 源目录
-          # SOURCE: 'dist/*'
+          SOURCE: 'dist/*'
           # 服务器ip
           REMOTE_HOST: '49.235.118.67'
           # 用户
           REMOTE_USER: 'root'
           # 目标地址
-          # TARGET: '/xjdata2/nginx/html'
+          TARGET: '/xjdata2/nginx/html'
           # 测试ssh连接
           SCRIPT_BEFORE: |
             docker stop xj22-nginx || true
