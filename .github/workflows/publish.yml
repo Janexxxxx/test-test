@@ -17,9 +17,10 @@ jobs:
       - name: Build Docker Image
         run: sudo docker build -t nginx:latest .
 
-      - name: 列出构建后的文件
-        run: ls -R
-
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       # 发布到腾讯云
       - name: 发布到腾讯云
         uses: easingthemes/ssh-deploy@main
