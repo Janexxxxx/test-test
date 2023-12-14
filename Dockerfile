@@ -23,10 +23,11 @@ FROM nginx:latest
 # 指定目录，确保该目录在服务器上存在，如果不存在，可以提前创建
 ARG TARGET_DIR=/usr/share/nginx/html
 
-# 输出html
-RUN ls -R /usr/share/nginx/html
 # 复制打包好的 dist 目录到指定目录
 COPY --from=builder /app/dist $TARGET_DIR
+
+# 输出html
+RUN ls -R /usr/share/nginx/html
 
 # 暴露容器的端口
 EXPOSE 80
