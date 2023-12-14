@@ -17,6 +17,10 @@ COPY . .
 # 打包应用程序
 RUN pnpm run build
 
+# 输出构建阶段的文件结构
+RUN ls -R /app
+
+
 # 使用 Nginx 镜像作为基础镜像
 FROM nginx:latest
 
