@@ -28,6 +28,7 @@ COPY --from=builder /app/dist $TARGET_DIR
 
 # # 设置文件权限
 # RUN chmod -R 755 /usr/share/nginx/html
+RUN chown -R nginx:nginx /usr/share/nginx/html
 
 # 输出复制后的文件结构
 # RUN ls -R $TARGET_DIR
