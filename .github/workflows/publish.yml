@@ -33,17 +33,17 @@ jobs:
           # SCP参数
           ARGS: '-avzr --delete'
           # 源目录
-          SOURCE: 'public/*'
+          # SOURCE: 'public/*'
           # 服务器ip
           REMOTE_HOST: '49.235.118.67'
           # 用户
           REMOTE_USER: 'root'
           # 目标地址
-          TARGET: '/xjdata2/nginx/html'
+          # TARGET: '/xjdata2/nginx/html'
           # 测试ssh连接
           SCRIPT_BEFORE: |
             docker stop xj22-nginx || true
             docker rm xj22-nginx || true
-            docker run -p 8828:80 --name xj22-nginx -v /xjdata2/nginx/html:/usr/share/nginx/html -v /xjdata2/nginx/conf:/etc/nginx/conf.d -d nginx:latest
+            docker run -p 8828:80 --name xj22-nginx -v /xjdata2/nginx/conf:/etc/nginx/conf.d -d nginx:latest
             sleep 5  # 等待 5 秒以确保容器已经正常运行
             docker logs xj22-nginx  # 打印容器日志
