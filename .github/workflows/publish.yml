@@ -33,7 +33,7 @@ jobs:
           # SCP参数
           ARGS: '-avzr --delete'
           # 源目录
-          SOURCE: '.'
+          SOURCE: 'public/*'
           # 服务器ip
           REMOTE_HOST: '49.235.118.67'
           # 用户
