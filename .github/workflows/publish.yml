@@ -20,6 +20,10 @@ jobs:
       - name: 列出构建后的文件
         run: ls -R
 
+      # 导出 dist 目录作为构建产物
+      - name: 导出 dist 目录
+        run: mkdir dist && cp -r app/dist dist
+
       # 发布到腾讯云
       - name: 发布到腾讯云
         uses: easingthemes/ssh-deploy@main
@@ -29,17 +33,17 @@ jobs:
           # SCP参数
           ARGS: '-avzr'
           # 源目录（这里需要修改为服务器上的目录）
-          # SOURCE: '/xjdata2/nginx/html/*'
+          SOURCE: './dist/*'
           # 服务器ip
           REMOTE_HOST: '49.235.118.67'
           # 用户
           REMOTE_USER: 'root'
           # 目标地址
-          # TARGET: '/xjdata2/nginx/html'
+          TARGET: '/xjdata2/nginx/html'
           # 测试ssh连接
           SCRIPT_BEFORE: |
             docker stop xj22-nginx || true
             docker rm xj22-nginx || true
-            docker run -p 8828:80 --name xj22-nginx -v /xjdata2/nginx/conf:/etc/nginx/conf.d -d nginx:latest
+            docker run -p 8828:80 --name xj22-nginx -v /xjdata2/nginx/conf:/etc/nginx/conf.d -v /xjdata2/nginx/html:/usr/share/nginx/html  -d nginx:latest
             sleep 5  # 等待 5 秒以确保容器已经正常运行
             docker logs xj22-nginx
