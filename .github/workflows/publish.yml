@@ -15,7 +15,10 @@ jobs:
 
       # 构建 Docker 镜像
       - name: Build Docker Image
-        run: sudo docker build -t myimage .
+        run: |
+          sudo docker build -t myimage .
+          mkdir -p exported-image
+          sudo docker save myimage -o exported-image/myimage.tar
 
   deploy:
     needs: build
@@ -35,4 +38,5 @@ jobs:
           REMOTE_USER: 'root'
           # 测试ssh连接
           SCRIPT_BEFORE: |
+            docker load -i exported-image/myimage.tar
             docker run -p 8828:80 myimage
