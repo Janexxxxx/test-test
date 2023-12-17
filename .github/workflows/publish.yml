@@ -17,32 +17,29 @@ jobs:
           docker build -t myimage .
           docker save -o /tmp/myimage.tar myimage
 
-      - name: Save Docker Image
-        uses: actions/upload-artifact@v2
-        with:
-          name: myimage
-          path: /tmp/myimage.tar
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: 下载保存的 Docker Image
-        uses: actions/download-artifact@v2
+      - name: 上传 Docker Image 到远程服务器
+        uses: easingthemes/scp-action@v2
         with:
-          name: myimage
-          path: /tmp
+          local: /tmp/myimage.tar
+          remote: /tmp/myimage.tar
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.PRIVATEKEY }}
 
-      - name: 加载 Docker Image
+      - name: 在远程服务器加载 Docker Image
         run: |
-          sudo docker load -i /tmp/myimage.tar
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.PRIVATEKEY }} ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "sudo docker load -i /tmp/myimage.tar"
 
       - name: 发布到腾讯云
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.PRIVATEKEY }}
           ARGS: '-avzr'
-          REMOTE_HOST: '124.221.172.120'
-          REMOTE_USER: 'root'
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
           SCRIPT_BEFORE: |
             docker run -p 8828:80 myimage:latest
