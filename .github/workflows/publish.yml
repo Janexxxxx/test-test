@@ -16,12 +16,12 @@ jobs:
           sudo docker build -t myimage .
           sudo docker save -o myimage.tar myimage
 
-        # 存储到 artifacts，以便在后续的步骤中使用
-        - name: Save Docker Image
-          uses: actions/upload-artifact@v2
-          with:
-            name: myimage
-            path: myimage.tar
+      # 存储到 artifacts，以便在后续的步骤中使用
+      - name: Save Docker Image
+        uses: actions/upload-artifact@v2
+        with:
+          name: myimage
+          path: myimage.tar
 
   deploy:
     needs: build
