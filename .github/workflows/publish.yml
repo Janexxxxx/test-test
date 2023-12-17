@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 上传 Docker Image 到远程服务器
-        uses: appleboy/scp-action@main
+        uses: appleboy/scp-action@<commit-SHA>
         with:
           local: /tmp/myimage.tar
           remote: /tmp/myimage.tar
