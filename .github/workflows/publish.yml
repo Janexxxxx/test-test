@@ -13,8 +13,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Build Docker Image
         run: |
-          sudo docker build -t myimage .
-          sudo docker save -o myimage.tar myimage
+          docker build -t myimage .
+          docker save -o myimage.tar myimage
 
       # 存储到 artifacts，以便在后续的步骤中使用
       - name: Save Docker Image
