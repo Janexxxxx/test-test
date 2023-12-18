@@ -22,20 +22,32 @@ jobs:
       - name: Push Docker Image
         run: docker push xjane/xj_image:latest
 
-      # 发布到腾讯云
-      - name: SSH into server and run Docker container
-        uses: easingthemes/ssh-deploy@main
+      # # 发布到腾讯云
+      # - name: SSH into server and run Docker container
+      #   uses: easingthemes/ssh-deploy@main
+      #   with:
+      #     # 私钥
+      #     SSH_PRIVATE_KEY: ${{ secrets.PRIVATEKEY }}
+      #     # SCP参数
+      #     ARGS: '-avzr'
+      #     # 服务器ip
+      #     REMOTE_HOST: '124.221.172.120'
+      #     # 用户
+      #     REMOTE_USER: 'root'
+      #     # 测试ssh连接
+      #     SCRIPT: |
+      #       docker stop xj22-nginx || true
+      #       docker rm xj22-nginx || true
+      #       docker run -p 8828:80 --name xj22-nginx -d xjane/xj_image:latest
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
         with:
-          # 私钥
-          SSH_PRIVATE_KEY: ${{ secrets.PRIVATEKEY }}
-          # SCP参数
-          ARGS: '-avzr'
-          # 服务器ip
-          REMOTE_HOST: '124.221.172.120'
-          # 用户
-          REMOTE_USER: 'root'
-          # 测试ssh连接
-          SCRIPT: |
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SERVER_PRIVATE_KEY }}
+          # port: 8828
+          script: |
             docker stop xj22-nginx || true
             docker rm xj22-nginx || true
+            docker pull xjane/xj_image:latest
             docker run -p 8828:80 --name xj22-nginx -d xjane/xj_image:latest
