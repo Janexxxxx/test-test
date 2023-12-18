@@ -21,7 +21,6 @@ jobs:
 
       - name: Push Docker Image
         run: docker push xjane/xj_image:latest
-        docker push xjane/xj_image:tagname
 
       - name: SSH into server and run Docker container
         uses: appleboy/ssh-action@master
