@@ -44,7 +44,7 @@ jobs:
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SERVER_PRIVATE_KEY }}
+          key: ${{ secrets.PRIVATEKEY }}
           # port: 8828
           script: |
             docker stop xj22-nginx || true
