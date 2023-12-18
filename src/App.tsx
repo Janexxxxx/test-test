@@ -16,11 +16,11 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>6Vite + R是eact12345</h1>
+      <h1>Vite + React+xujingComing</h1>
       <div className="card">
         <button onClick={() => setCount(count => count + 1)}>count is {count}</button>
         <p>
-         12xjx22ssEditsqq<code>src/App.tsx</code> and save to test HMR
+         Edit<code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
       <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
