@@ -1,4 +1,4 @@
-name: 打包应用并上传服务器
+name: Deploy to Server
 
 on:
   push:
@@ -6,28 +6,29 @@ on:
       - master
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: 迁出代码
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Build Docker Image
-        run: |
-          docker build -t myimage .
-          docker save -o /tmp/myimage.tar myimage
+        run: docker build -t nginx:latest .
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: 上传 Docker Image 到远程服务器
-        run: scp -o StrictHostKeyChecking=no -i ${{ secrets.P_KEY }} /tmp/myimage.tar ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/tmp/myimage.tar
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: 在远程服务器加载 Docker Image
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.P_KEY }} ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "sudo docker load -i /tmp/myimage.tar"
+      - name: Push Docker Image
+        run: docker push nginx:latest
 
-      - name: 发布到腾讯云
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.P_KEY }} ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "sudo docker run -p 8828:80 myimage:latest"
+      - name: SSH into server and run Docker container
+        uses: appleboy/ssh-action@master
+        with:
+          host: 124.221.172.120
+          username: root
+          key: ${{ secrets.PRIVATEKEY }}
+          port: 8828
+          script: |
+            docker pull your-image-name:latest
+            docker run -p 8828:80 --name xj22-nginx -d nginx:latest
