@@ -35,7 +35,7 @@ jobs:
           # 用户
           REMOTE_USER: 'root'
           # 测试ssh连接
-          SCRIPT_BEFORE: |
+          SCRIPT: |
             docker stop xj22-nginx || true
             docker rm xj22-nginx || true
             docker run -p 8828:80 --name xj22-nginx -d xjane/xj_image:latest
