@@ -27,7 +27,7 @@ jobs:
         with:
           host: 124.221.172.120
           username: root
-          key: ${{ secrets.PRIVATEKEY }}
+          key: ${{ secrets.SEVER_PRIVATE_KEY }}
           port: 8828
           script: |
             docker pull xjane/xj_image:latest
