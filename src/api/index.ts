@@ -9,7 +9,7 @@ const createAxiosInstance = (token: string) => {
     // withCredentials: true,
   });
   requestHttp.interceptors.request.use((config: any) => {
-    console.log('又来一个4', token);
+    console.log('又来一个', token);
 
     return { ...config, headers: { ...config.headers, 'x-access-token': token } };
   });
